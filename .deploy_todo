@@ -1,0 +1,7 @@
+1. Create GitHub repo and push current project
+2. Sign in to Cloudflare and add domain vibcx.com
+3. Change domain registrar nameservers to Cloudflare's nameservers
+4. In Cloudflare -> Pages: Connect GitHub repo and configure build (output dir '.')
+5. Deploy and add custom domain vibcx.com and www.vibcx.com
+6. Verify TLS issued and site loads
+7. Optional: configure redirect (enforce www) and caching/CDN settings
