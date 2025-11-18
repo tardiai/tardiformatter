@@ -1195,7 +1195,8 @@ const markdown = \`![图片](img://\${imageId})\`;
         this.showToast('没有内容可复制', 'error');
         return;
       }
-
+      console.log('当前样式:', this.currentStyle);
+      console.log('使用的样式对象:', STYLES[this.currentStyle]);
       try {
         const parser = new DOMParser();
         const doc = parser.parseFromString(this.renderedContent, 'text/html');
@@ -1338,6 +1339,8 @@ const markdown = \`![图片](img://\${imageId})\`;
         this.copySuccess = true;
         this.showToast('复制成功', 'success');
 
+        console.log('最终复制的 HTML:', simplifiedHTML);
+
         setTimeout(() => {
           this.copySuccess = false;
         }, 2000);
@@ -1346,6 +1349,133 @@ const markdown = \`![图片](img://\${imageId})\`;
         this.showToast('复制失败', 'error');
       }
     },
+
+  //   async copyToClipboard() {
+  // if (!this.renderedContent) {
+  //   this.showToast('没有内容可复制', 'error');
+  //   return;
+  // }
+
+  // // =====  唯一可调参数 =====
+  // const CODE_FONT_SIZE  = 14;   // 代码块独立字号
+  // const TABLE_FONT_SIZE = 14;   // 表格独立字号
+  // const TEXT_SCALE      = 0.92; // 全文等比缩放（0.92 = 92%）
+  // const CODE_PADDING    = '4px 8px'; // 代码块内边距
+  // // ========================
+
+  // try {
+  //   this.showToast('正在同步预览样式...', 'success');
+
+  //   const parser = new DOMParser();
+  //   const doc = parser.parseFromString(this.renderedContent, 'text/html');
+
+  //   // 1. 图片网格 → table（保持原逻辑）
+  //   this.convertGridToTable(doc);
+
+  //   // 2. 图片转 base64（保持原逻辑）
+  //   const images = doc.querySelectorAll('img');
+  //   if (images.length) {
+  //     let ok = 0, fail = 0;
+  //     await Promise.all(Array.from(images).map(async img => {
+  //       try {
+  //         const base64 = await this.convertImageToBase64(img);
+  //         img.setAttribute('src', base64); ok++;
+  //       } catch (e) { fail++; }
+  //     }));
+  //     if (fail) this.showToast(`${ok} 张图成功，${fail} 张失败`, 'error');
+  //   }
+
+  //   // 3. 实时读取当前预览样式
+  //   const baseStyles = STYLES[this.currentStyle].styles;
+
+  //   // 解析原始值（带缺省）
+  //   function pick(css, reg, def, unit = '') {
+  //     const m = css.match(reg);
+  //     return m ? m[1] + unit : def;
+  //   }
+  //   const baseFontSize = parseInt(pick(baseStyles.p || '', /font-size:\s*(\d+)px/, '16', ''));
+  //   const baseLineHeight = parseFloat(pick(baseStyles.p || '', /line-height:\s*([\d.]+)/, '1.8'));
+  //   const baseColor = pick(baseStyles.p || '', /color:\s*([^!;]+)/, '#3a3a3a');
+  //   const baseMargin = pick(baseStyles.p || '', /margin:\s*([^;]+)/, '16px 0');
+
+  //   // 计算缩放后数值
+  //   const newFontSize = Math.round(baseFontSize * TEXT_SCALE);
+  //   const newLine = (baseLineHeight * TEXT_SCALE).toFixed(2);
+  //   const newMargin = baseMargin.replace(/(\d+)px/g, (_, v) => Math.round(v * TEXT_SCALE) + 'px');
+
+  //   // 4. 代码块独立样式（保持深色+圆角）
+  //   doc.querySelectorAll('pre').forEach(pre => {
+  //     pre.style.cssText = `background:#1e1e1e;color:#d4d4d4;font-size:${CODE_FONT_SIZE}px;padding:${CODE_PADDING};margin:${newMargin};border-radius:4px;font-family:Consolas,Monaco,monospace;line-height:${newLine};white-space:pre-wrap;`;
+  //     const code = pre.querySelector('code');
+  //     if (code) code.style.cssText = `display:block;color:#d4d4d4;font-family:Consolas,Monaco,monospace;font-size:${CODE_FONT_SIZE}px;line-height:${newLine};`;
+  //   });
+
+  //   // 5. 表格独立字号
+  //   doc.querySelectorAll('table,td,th').forEach(el => {
+  //     el.style.cssText += `;font-size:${TABLE_FONT_SIZE}px !important;`;
+  //   });
+
+  //   // 6. 其余元素（正文、标题、li 等）统一缩放
+  //   const tags = ['p', 'li', 'span', 'div:not(pre div)', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+  //   tags.forEach(tag => {
+  //     doc.querySelectorAll(tag).forEach(el => {
+  //       if (el.closest('pre') || el.closest('table')) return; // 跳过代码/表格内部
+  //       el.style.cssText += `;font-size:${newFontSize}px !important;line-height:${newLine} !important;margin:${newMargin} !important;color:${baseColor} !important;`;
+  //     });
+  //   });
+
+  //   // 7. 其余原有逻辑（section 包裹、简化代码块、列表扁平化）保持不动
+  //   const styleConfig = STYLES[this.currentStyle];
+  //   const containerBg = this.extractBackgroundColor(styleConfig.styles.container);
+  //   if (containerBg && containerBg !== '#fff' && containerBg !== '#ffffff') {
+  //     const section = doc.createElement('section');
+  //     section.style.cssText = `background-color:${containerBg};padding:20px;max-width:740px;margin:0 auto;box-sizing:border-box;word-wrap:break-word;`;
+  //     while (doc.body.firstChild) section.appendChild(doc.body.firstChild);
+  //     doc.body.appendChild(section);
+  //   }
+
+  //   // 8. 简化代码块（去掉 mac 窗口装饰）
+  //   const codeBlocks = doc.querySelectorAll('div[style*="border-radius: 8px"]');
+  //   codeBlocks.forEach(block => {
+  //     const codeEl = block.querySelector('code');
+  //     if (codeEl) {
+  //       const txt = codeEl.textContent;
+  //       const pre = doc.createElement('pre');
+  //       const code = doc.createElement('code');
+  //       pre.style.cssText = `background:#1e1e1e;color:#d4d4d4;font-size:${CODE_FONT_SIZE}px;padding:${CODE_PADDING};margin:${newMargin};border-radius:4px;font-family:Consolas,Monaco,monospace;line-height:${newLine};overflow-x:auto;`;
+  //       code.style.cssText = `display:block;color:#d4d4d4;font-family:Consolas,Monaco,monospace;font-size:${CODE_FONT_SIZE}px;line-height:${newLine};white-space:pre;`;
+  //       code.textContent = txt;
+  //       pre.appendChild(code);
+  //       block.parentNode.replaceChild(pre, block);
+  //     }
+  //   });
+
+  //   // 9. 列表扁平化（保持原逻辑）
+  //   // 替换原来的 flatten 逻辑
+  //   doc.querySelectorAll('li').forEach(li => {
+  // // 1. 保留原始换行 → 用 <br> 替代手动换行
+  //     let txt = li.innerHTML.replace(/\s+/g, ' ').trim(); // 先压多余空格
+  //     txt = txt.replace(/(\.\s+|\.\s*$)/g, '.<br>');      // 句点后强制换行（可选）
+  //     li.innerHTML = txt;                               // 塞回原始 HTML（含 <br>）
+  //   });
+
+  //   // 10. 写入剪贴板
+  //   const simplifiedHTML = doc.body.innerHTML;
+  //   const htmlBlob = new Blob([simplifiedHTML], { type: 'text/html' });
+  //   const textBlob = new Blob([doc.body.textContent || ''], { type: 'text/plain' });
+  //   await navigator.clipboard.write([
+  //     new ClipboardItem({ 'text/html': htmlBlob, 'text/plain': textBlob })
+  //   ]);
+
+  //   this.copySuccess = true;
+  //   this.showToast('复制成功（样式已同步预览）', 'success');
+  //   setTimeout(() => this.copySuccess = false, 2000);
+
+  // } catch (e) {
+  //   console.error(e);
+  //   this.showToast('复制失败: ' + e.message, 'error');
+  // }
+  // },
 
     async convertImageToBase64(imgElement) {
       const src = imgElement.getAttribute('src');
