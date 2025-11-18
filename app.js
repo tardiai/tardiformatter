@@ -528,7 +528,10 @@ const editorApp = createApp({
       // 小红书相关
       previewMode: 'wechat',  // 预览模式：'wechat' 或 'xiaohongshu'
       xiaohongshuImages: [],  // 生成的小红书图片数组
-      xiaohongshuGenerating: false  // 是否正在生成小红书图片
+      xiaohongshuGenerating: false,  // 是否正在生成小红书图片
+      // 同步滚动相关
+      syncScroll: true,  // 是否启用同步滚动
+      isScrollingSynced: false  // 标记是否正在同步滚动中（防止循环触发）
     };
   },
 
@@ -594,6 +597,9 @@ const editorApp = createApp({
     // 手动触发一次渲染（确保初始内容显示）
     this.$nextTick(() => {
       this.renderMarkdown();
+      
+      // 初始化同步滚动
+      this.initSyncScroll();
     });
   },
 
@@ -618,6 +624,70 @@ const editorApp = createApp({
   },
 
   methods: {
+    // 初始化同步滚动
+    initSyncScroll() {
+      // 加载保存的同步滚动偏好
+      try {
+        const savedSyncScroll = localStorage.getItem('syncScroll');
+        if (savedSyncScroll !== null) {
+          this.syncScroll = JSON.parse(savedSyncScroll);
+        }
+      } catch (error) {
+        console.error('加载同步滚动偏好失败:', error);
+      }
+
+      // 等待DOM渲染完成后再添加事件监听
+      this.$nextTick(() => {
+        const editorElement = document.querySelector('.markdown-input');
+        const previewElement = document.querySelector('.preview-content');
+
+        if (!editorElement || !previewElement) {
+          console.warn('无法找到编辑器或预览元素');
+          return;
+        }
+
+        // 编辑区滚动事件
+        editorElement.addEventListener('scroll', (e) => {
+          if (!this.syncScroll || this.isScrollingSynced) return;
+          
+          this.isScrollingSynced = true;
+          
+          // 计算滚动比例
+          const scrollRatio = editorElement.scrollTop / (editorElement.scrollHeight - editorElement.clientHeight);
+          // 同步到预览区
+          previewElement.scrollTop = scrollRatio * (previewElement.scrollHeight - previewElement.clientHeight);
+          
+          this.isScrollingSynced = false;
+        });
+
+        // 预览区滚动事件
+        previewElement.addEventListener('scroll', (e) => {
+          if (!this.syncScroll || this.isScrollingSynced) return;
+          
+          this.isScrollingSynced = true;
+          
+          // 计算滚动比例
+          const scrollRatio = previewElement.scrollTop / (previewElement.scrollHeight - previewElement.clientHeight);
+          // 同步到编辑区
+          editorElement.scrollTop = scrollRatio * (editorElement.scrollHeight - editorElement.clientHeight);
+          
+          this.isScrollingSynced = false;
+        });
+
+        console.log('同步滚动已初始化');
+      });
+    },
+
+    // 切换同步滚动
+    toggleSyncScroll() {
+      this.syncScroll = !this.syncScroll;
+      // 保存到 localStorage
+      localStorage.setItem('syncScroll', JSON.stringify(this.syncScroll));
+      
+      const message = this.syncScroll ? '已启用同步滚动' : '已禁用同步滚动';
+      this.showToast(message, 'success');
+    },
+
     loadStarredStyles() {
       try {
         const saved = localStorage.getItem('starredStyles');
