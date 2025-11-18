@@ -1,18 +1,14 @@
-# 公众号 Markdown 编辑器
+# Markdown公众号排版
 
 <div align="center">
-  <img src="logo.svg" width="120" height="120" alt="公众号 Markdown 编辑器">
+  <img src="logo.svg" width="120" height="120" alt="Markdown公众号排版">
 
-  一个专为微信公众号设计的 Markdown 编辑器
-
-  [![在线体验](https://img.shields.io/badge/在线体验-editor.huasheng.ai-0066FF?style=for-the-badge)](https://editor.huasheng.ai/)
-  [![GitHub](https://img.shields.io/badge/GitHub-源代码-000?style=for-the-badge&logo=github)](https://github.com/alchaincyf/huasheng_editor)
-  [![知识星球](https://img.shields.io/badge/知识星球-AI编程-ff6b6b?style=for-the-badge)](https://wx.zsxq.com/group/48888144124288)
+  一个专为微信公众号设计的 Markdown排版工具
 </div>
 
 ## 🌟 在线体验
 
-👉 **[https://editor.huasheng.ai/](https://editor.huasheng.ai/)**
+👉 **[https://tardiformatter.vibcx.com/](https://tardiformatter.vibcx.com/)**
 
 ## ✨ 功能特点
 
@@ -42,7 +38,7 @@
 ## 📖 使用指南
 
 ### 快速开始
-1. 访问 [在线编辑器](https://editor.huasheng.ai/)
+1. 访问 [在线编辑器](https://tardiformatter.vibcx.com/)
 2. 在左侧输入或粘贴 Markdown 内容
 3. 选择喜欢的样式主题
 4. 点击「复制到公众号」
@@ -51,10 +47,10 @@
 ### 本地运行
 ```bash
 # 克隆仓库
-git clone https://github.com/alchaincyf/huasheng_editor.git
+git clone https://github.com/tardiai/tardiformatter.git
 
 # 进入目录
-cd huasheng_editor
+cd tardiformatter
 
 # 启动本地服务器（Python）
 python3 -m http.server 8080
@@ -155,22 +151,9 @@ IndexedDB 持久化存储
 
 ## 👨‍💻 作者
 
-**花生** (alchaincyf)
-- 📧 邮箱：[alchaincyf@gmail.com](mailto:alchaincyf@gmail.com)
-- 🌟 知识星球：[AI编程：从入门到精通](https://wx.zsxq.com/group/48888144124288)
-- 💻 GitHub：[@alchaincyf](https://github.com/alchaincyf)
+**塔迪Tardi** (tardiai)
+- 📧 邮箱：[tardiai](mailto:44279@qq.com)
 
-## 🎓 知识星球
-
-本项目是我为知识星球「**AI编程：从入门到精通**」的用户开源的工具。
-
-在星球里，你可以：
-- 🚀 学习 AI 编程最佳实践
-- 💡 获取更多开源项目
-- 🤝 与同好交流技术
-- 📚 获得系统化的学习路径
-
-👉 [加入知识星球](https://wx.zsxq.com/group/48888144124288)
 
 ## 📄 开源协议
 
@@ -181,21 +164,3 @@ IndexedDB 持久化存储
 - ✅ 修改
 - ✅ 分发
 - ✅ 私有使用
-
-## 🙏 致谢
-
-- 感谢所有贡献者和使用者
-- 感谢知识星球的朋友们的支持
-- 特别感谢 Claude 在项目开发中的协助
-
-## 📊 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=alchaincyf/huasheng_editor&type=Date)](https://star-history.com/#alchaincyf/huasheng_editor&Date)
-
----
-
-<div align="center">
-  Made with ❤️ by <a href="https://github.com/alchaincyf">花生</a>
-  <br>
-  如果觉得有用，请给个 ⭐️ Star 支持一下！
-</div>

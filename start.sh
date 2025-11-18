@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# 公众号 Markdown 编辑器 - 启动脚本
+# Markdown公众号排版 - 启动脚本
 
-echo "📝 公众号 Markdown 编辑器"
+echo "📝 Markdown公众号排版"
 echo "================================"
 echo ""
 echo "🌐 服务器地址: http://localhost:8080/"

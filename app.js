@@ -741,7 +741,7 @@ const editorApp = createApp({
     loadDefaultExample() {
       this.markdownInput = `![](https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=1200&h=400&fit=crop)
 
-# 公众号 Markdown 编辑器
+# Markdown公众号排版
 
 欢迎使用这款专为**微信公众号**设计的 Markdown 编辑器！✨
 
@@ -808,7 +808,7 @@ const markdown = \`![图片](img://\${imageId})\`;
 - 粘贴图片试试智能压缩功能
 - 刷新页面看看内容是否保留
 
-**🌟 开源项目**：如果觉得有用，欢迎访问 [GitHub 仓库](https://github.com/alchaincyf/huasheng_editor) 给个 Star！`;
+**🌟 开源项目**：如果觉得有用，欢迎访问 [GitHub 仓库](https://github.com/tardiai/tardiformatter.git) 给个 Star！`;
     },
 
     handleFileUpload(event) {
