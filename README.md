@@ -1,4 +1,4 @@
-# Markdown公众号排版
+# Markdown公众号排版工具
 
 <div align="center">
   <img src="logo.svg" width="120" height="120" alt="Markdown公众号排版">
