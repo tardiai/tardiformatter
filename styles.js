@@ -46,7 +46,9 @@ const STYLES = {
       ul: 'margin: 24px 0; padding-left: 28px; list-style-type: disc;',
       ol: 'margin: 24px 0; padding-left: 28px; list-style-type: decimal;',
       li: 'font-size: 16px; margin: 12px 0; line-height: 1.8 !important; color: #1a1a1a !important;',
-      blockquote: 'margin: 4px 0; padding: 2px 2px 2px 20px; background-color: #f5f5f5 !important; border-left: 2px solid #009873; color: #1a1a1a !important; font-size: 15px; line-height: 1.6 !important; position: relative; border-radius: 2px;',
+      blockquote: 'margin: 4px 0; padding: 2px 2px 2px 20px; background-color: #f5f5f5 !important; border-left: 2px solid #009873; color: #1a1a1a !important; font-size: 15px !important; line-height: 1.6 !important; position: relative; border-radius: 2px;',
+      'blockquote p': 'font-size: 14px !important; margin: 18px 0 !important; line-height: 1.6 !important;',
+      'blockquote li': 'font-size: 14px !important;', // 如果引用块内有列表
       code: 'font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 14px; padding: 3px 8px; background-color: #f5f5f5 !important; color: #009873 !important; border-radius: 4px; font-weight: 500;',
       pre: 'margin: 28px 0; padding: 20px; background-color: #2a2a2a !important; color: #f5f5f5 !important; border-radius: 6px; overflow-x: auto; line-height: 1.6 !important; border-left: 4px solid #009873;',
       hr: 'margin: 40px auto; border: none; height: 2px; background: linear-gradient(to right, transparent, #009873, transparent); max-width: 200px;',
